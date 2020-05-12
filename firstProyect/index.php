@@ -1,13 +1,14 @@
 <?php 
 include_once 'conexion.php';
 
+// LEEMOS LOS DATOS
 $sql_leer = 'SELECT * FROM colores';
 $mostrar = $pdo->prepare($sql_leer);
 $mostrar->execute();
 
 $resultado = $mostrar->fetchAll();
-
 // var_dump($resultado);
+
 
 //AGREGAR DATOS
 if ($_POST) {
@@ -18,9 +19,15 @@ if ($_POST) {
     $add = $pdo->prepare($sql_agregar);
     $add->execute(array($color, $descripcion));
 
+    // Cerramos conexion de base de datos y sentencias
+    $add = null;
+    $pdo = null;
+
+    // Redireccionamos a la pagina principal
     header('location: index.php');
 }
 
+// MODIFICAMOS LOS DATOS
 if($_GET){
     $id = $_GET['id'];
     $sql_unico = 'SELECT * FROM colores WHERE id=?';
@@ -90,3 +97,8 @@ if($_GET){
     </div>
 </body>
 </html>
+
+<?php 
+    $mostrar = null;
+    $pdo = null;
+?>

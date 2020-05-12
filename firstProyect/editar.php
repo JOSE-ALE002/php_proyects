@@ -17,4 +17,6 @@
     $editar = $pdo->prepare($sql_editar);
     $editar->execute(array($color, $descripcion, $id));
 
+    $editar = null;
+    $pdo = null;
     header('location: index.php');
