@@ -52,10 +52,14 @@ if($_GET){
             <?php foreach ($resultado as $item): ?>
             <div class="text-uppercase alert alert-<?php echo $item['color'] ?>" role="alert">
                 <?php echo $item['color'] . ' - ' . $item['descripcion'] ?>
+                
+                <a href="eliminar.php?id=<?php echo $item['id'] ?>" class="float-right ml-3">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
 
                 <a href="index.php?id=<?php echo $item['id'] ?>" class="float-right">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
+                </a>        
             </div>
             <?php endforeach ?>
         </div>
