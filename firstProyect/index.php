@@ -8,6 +8,18 @@ $mostrar->execute();
 $resultado = $mostrar->fetchAll();
 
 // var_dump($resultado);
+
+//AGREGAR DATOS
+if ($_POST) {
+    $color = $_POST['color'];
+    $descripcion = $_POST['descripcion'];
+    
+    $sql_agregar = 'INSERT INTO colores(color, descripcion) VALUES (?, ?)';
+    $add = $pdo->prepare($sql_agregar);
+    $add->execute(array($color, $descripcion));
+
+    header('location: index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +39,15 @@ $resultado = $mostrar->fetchAll();
                 <?php echo $item['color'] . ' - ' . $item['descripcion'] ?>
             </div>
             <?php endforeach ?>
+        </div>
+
+        <div class="col-md-6">                
+            <h1>AGREGAR ELEMENTO</h1>
+            <form method="POST">                
+                <input type="text" placeholder="Ingresa color" class="form-control" name="color">
+                <input type="text" placeholder="Ingresa descripcion" class="form-control mt-3" name="descripcion">                
+                <input type="submit" value="Agregar" class="btn btn-success mt-3">
+            </form>                
         </div>
     </div>
         
