@@ -8,7 +8,7 @@ $mostrar->execute();
 $resultado = $mostrar->fetchAll();
 
 $articulo_x_pagina = 3;
-$paginas = ceil($mostrar->rowCount()/3);
+$paginas = ceil($mostrar->rowCount() / 3);
 
 ?>
 
@@ -28,33 +28,31 @@ $paginas = ceil($mostrar->rowCount()/3);
     <div class="container my-5">
         <h1 class="mb-5">Paginacion</h1>
 
-        <?php foreach ($resultado as $item): ?>
+        <?php foreach ($resultado as $item) : ?>
             <div class="alert alert-primary" role="alert">
-                <?php echo $item['titulo']?>
+                <?php echo $item['titulo'] ?>
             </div>
         <?php endforeach ?>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link"
-                    href="index.php?pagina=<?php echo $_GET['pagina']-1 ?>">
+                <li class="page-item
+                <?php echo ($_GET['pagina'] <= $paginas) ? 'disabled' : '' ?>">
+                    <a class="page-link" href="index.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">
                         Previous
-                    </a>
-
-                </li>   
-
-                <?php for ($i=0; $i < $paginas; $i++): ?>
-                    <li class="page-item <?php echo ($_GET['pagina']==$i+1) ? 'active' : '' ?>"><a class="page-link" href="index.php?pagina=<?php echo $i+1 ?>"><?php echo $i+1 ?></a></li>                
-                <?php endfor ?>
-
-                <li class="page-item">
-                    <a class="page-link" 
-                    href="index.php?pagina=<?php echo $_GET['pagina']+1 ?>">
-                        Next
                     </a>
                 </li>
 
+                <?php for ($i = 0; $i < $paginas; $i++) : ?>
+                    <li class="page-item <?php echo ($_GET['pagina'] == $i + 1) ? 'active' : '' ?>"><a class="page-link" href="index.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
+                <?php endfor ?>
+
+                <li class="page-item
+                <?php echo ($_GET['pagina'] >= $paginas) ? 'disabled' : '' ?> ">
+                    <a class="page-link" href="index.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">
+                        Next
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
