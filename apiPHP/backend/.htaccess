@@ -1,0 +1,9 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+#El ultimo parametro es opcional
+#RewriteRule ExpresionRegular UrlDestino [banderas]
+
+RewriteRule ^([a-zA-z0-9]*)$ datos.php?variable=$1
+
+
