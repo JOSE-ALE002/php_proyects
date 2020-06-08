@@ -5,7 +5,7 @@ $password = '';
 
 try {
     $pdo = new PDO($url, $user, $password);
-    echo 'Conectado';
+    // echo 'Conectado';
     
 } catch (PDOException $e) {
     print '!Error¡' . $e->getMessage() . '<br/>';

@@ -28,7 +28,28 @@ $paginas = ceil($mostrar->rowCount() / 3);
     <div class="container my-5">
         <h1 class="mb-5">Paginacion</h1>
 
-        <?php foreach ($resultado as $item) : ?>
+        <?php 
+        if(!$_GET){
+            header('location: index.php?pagina=1');
+        }
+
+        if($_GET['pagina']>$paginas || $_GET['pagina']<=0){
+            header('location: index.php?pagina=1');
+        }
+
+        $iniciar = ($_GET['pagina']-1)*$articulo_x_pagina;
+
+        $sql_articulos = 'SELECT * FROM articulos LIMIT :iniciar,:narticulos';
+        
+        $sentencia_articulos = $pdo->prepare($sql_articulos);
+        $sentencia_articulos->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
+        $sentencia_articulos->bindParam(':narticulos', $articulo_x_pagina, PDO::PARAM_INT);
+        $sentencia_articulos->execute();
+
+        $resultado_articulos = $sentencia_articulos->fetchAll();        
+        ?>
+
+        <?php foreach ($resultado_articulos as $item) : ?>
             <div class="alert alert-primary" role="alert">
                 <?php echo $item['titulo'] ?>
             </div>
@@ -37,7 +58,7 @@ $paginas = ceil($mostrar->rowCount() / 3);
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item
-                <?php echo ($_GET['pagina'] <= $paginas) ? 'disabled' : '' ?>">
+                <?php echo ($_GET['pagina'] <= 1) ? 'disabled' : '' ?>">
                     <a class="page-link" href="index.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">
                         Previous
                     </a>
